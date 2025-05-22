@@ -1,0 +1,96 @@
+import java.util.*;
+
+// Student class
+class Student {
+    String name;
+    int rollNumber;
+    String course;
+
+    public Student(String name, int rollNumber, String course) {
+        this.name = name;
+        this.rollNumber = rollNumber;
+        this.course = course;
+    }
+
+    public void displayInfo() {
+        System.out.println("Name: " + name + ", Roll No: " + rollNumber + ", Course: " + course);
+    }
+}
+
+// Main class
+public class StudentManagement {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
+
+        while (true) {
+            System.out.println("\n1. Add Student\n2. View All Students\n3. Search Student\n4. Delete Student\n5. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter name: ");
+                    sc.nextLine(); // consume newline
+                    String name = sc.nextLine();
+                    System.out.print("Enter roll number: ");
+                    int roll = sc.nextInt();
+                    System.out.print("Enter course: ");
+                    sc.nextLine();
+                    String course = sc.nextLine();
+                    students.add(new Student(name, roll, course));
+                    System.out.println("Student added successfully.");
+                    break;
+
+                case 2:
+                    if (students.isEmpty()) {
+                        System.out.println("No students to display.");
+                    } else {
+                        for (Student s : students) {
+                            s.displayInfo();
+                        }
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Enter roll number to search: ");
+                    int searchRoll = sc.nextInt();
+                    boolean found = false;
+                    for (Student s : students) {
+                        if (s.rollNumber == searchRoll) {
+                            s.displayInfo();
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) System.out.println("Student not found.");
+                    break;
+
+                case 4:
+                    System.out.print("Enter roll number to delete: ");
+                    int deleteRoll = sc.nextInt();
+                    Student toRemove = null;
+                    for (Student s : students) {
+                        if (s.rollNumber == deleteRoll) {
+                            toRemove = s;
+                            break;
+                        }
+                    }
+                    if (toRemove != null) {
+                        students.remove(toRemove);
+                        System.out.println("Student removed.");
+                    } else {
+                        System.out.println("Student not found.");
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Exiting...");
+                    return;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+    }
+}
